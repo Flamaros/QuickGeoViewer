@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>GeoFrame.qml</file>
+        <file>GeoFrameForm.ui.qml</file>
+    </qresource>
+</RCC>
