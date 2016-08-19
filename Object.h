@@ -1,12 +1,27 @@
 #pragma once
 
+#include <QObject>
 #include <QString>
 
-class Object
+class Object : public QObject
 {
-public:
-    virtual ~Object() {}
+    Q_OBJECT
 
-    QString name;
-    QString label;
+public:
+    Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(QString label READ label WRITE setLabel NOTIFY labelChanged)
+
+    void    setName(const QString& name) {mName = name;}
+    QString name() const {return mName;}
+
+    void    setLabel(const QString& label) {mLabel = label;}
+    QString label() const {return mLabel;}
+
+signals:
+    void    nameChanged();
+    void    labelChanged();
+
+private:
+    QString mName;
+    QString mLabel;
 };

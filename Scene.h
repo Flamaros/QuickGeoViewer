@@ -32,7 +32,7 @@ public:
     static Scene*   singleton();
 
     void	initialize();
-    void    instantiate(const QVector<Object*>& objects);
+    void    instantiate(const QList<QObject*>& objects);
     void    clear();
 
     Camera*             cameraEntity() const {return mCameraEntity;}

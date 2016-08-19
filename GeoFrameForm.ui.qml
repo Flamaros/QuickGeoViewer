@@ -5,7 +5,9 @@ import QtQuick.Layouts 1.1
 import Qt3D.Core 2.0
 import QtQuick.Scene3D 2.0
 
-import Scene 1.0
+import Geo.Scene 1.0
+import Geo.Object 1.0
+import Geo.Point 1.0
 
 Item {
     id: item1
@@ -26,27 +28,7 @@ Item {
             width: 110
             height: 160
             Layout.fillHeight: true
-            model: ListModel {
-                ListElement {
-                    name: "Grey"
-                    colorCode: "grey"
-                }
-
-                ListElement {
-                    name: "Red"
-                    colorCode: "red"
-                }
-
-                ListElement {
-                    name: "Blue"
-                    colorCode: "blue"
-                }
-
-                ListElement {
-                    name: "Green"
-                    colorCode: "green"
-                }
-            }
+            model: application.objects
             delegate: Item {
                 x: 5
                 width: 80
@@ -56,11 +38,11 @@ Item {
                     Rectangle {
                         width: 40
                         height: 40
-                        color: colorCode
+//                        color: colorCode
                     }
 
                     Text {
-                        text: name
+                        text: modelData.name
                         font.bold: true
                         anchors.verticalCenter: parent.verticalCenter
                     }

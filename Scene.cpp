@@ -123,7 +123,7 @@ void    Scene::initialize()
     updateQmlProperties();
 }
 
-void    Scene::instantiate(const QVector<Object*>& objects)
+void    Scene::instantiate(const QList<QObject*>& objects)
 {
     for (int i = 0; i < objects.size(); i++)
     {
@@ -215,7 +215,7 @@ void    Scene::updateQmlProperties()
     qmlContext->setContextProperty(elementsProperty, mElementsEntity);
 }
 
-void    Scene::instantiate(const Point &point)
+void    Scene::instantiate(const Point& point)
 {
     Qt3DExtras::QCuboidMesh*    mesh = new Qt3DExtras::QCuboidMesh();
     Qt3DCore::QTransform*       transform = new Qt3DCore::QTransform();
@@ -226,7 +226,7 @@ void    Scene::instantiate(const Point &point)
     mesh->setYExtent(0.1f);
     mesh->setZExtent(0.1f);
 
-    transform->setTranslation(point.position);
+    transform->setTranslation(point.position());
 
     material->setDiffuse(QColor(QRgb(0xbeb32b)));
     material->setAmbient(QColor(QRgb(0xbeb32b)));

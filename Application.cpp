@@ -26,7 +26,9 @@ void    Application::initialize()
 {
     Scene::qmlContext = mEngine->rootContext();
 
-    qmlRegisterType<Scene>("Scene", 1, 0, "GeoScene");
+    qmlRegisterType<Scene>("Geo.Scene", 1, 0, "GeoScene");
+    qmlRegisterType<Scene>("Geo.Object", 1, 0, "GeoObject");
+    qmlRegisterType<Scene>("Geo.Point", 1, 0, "GeoPoint");
 
     mEngine->rootContext()->setContextProperty("application", this);
     mEngine->load(QUrl(QLatin1String("qrc:/main.qml")));
@@ -63,7 +65,11 @@ bool    Application::parseUserInput(const QString& text)
     if (commands.empty())
         return false;
 
-    return parseCommands(commands);
+    if (parseCommands(commands) == false)
+        return false;
+
+    emit objectsChanged();
+    return true;
 }
 
 void    Application::clear()
@@ -76,7 +82,7 @@ bool    Application::parseCommands(const QStringList& commands)
 {
     static QString  pointObject = "Point";
 
-    QVector<Object*>    objects;
+    QList<QObject*> objects;
 
     for (int i = 0; i < commands.size(); i++)
     {
@@ -106,15 +112,15 @@ bool    Application::parseCommands(const QStringList& commands)
                 return false;
             }
 
-            Point*  point = new Point;
+            Point*  point = new Point();
 
-            point->name = nameAndObject[0];
-            point->position = QVector3D(
-                        coordinates[0].toFloat()
-                    , coordinates[1].toFloat()
-                    , coordinates.size() > 2 ? coordinates[2].toFloat() : 0.0f);
+            point->setName(nameAndObject[0]);
+            point->setPosition(QVector3D(
+                                   coordinates[0].toFloat()
+                               , coordinates[1].toFloat()
+                    , coordinates.size() > 2 ? coordinates[2].toFloat() : 0.0f));
 
-            objects.push_back(point);
+            objects.append(point);
         }
     }
 
@@ -123,7 +129,7 @@ bool    Application::parseCommands(const QStringList& commands)
     return objects.empty() == false;
 }
 
-void    Application::clearObjects(QVector<Object*> objects)
+void    Application::clearObjects(QList<QObject*>& objects)
 {
     for (int i = 0; i < objects.size(); i++)
         delete objects[i];
