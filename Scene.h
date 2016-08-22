@@ -35,6 +35,8 @@ public:
     void    instantiate(const QList<QObject*>& objects);
     void    clear();
 
+    void    setObjectColor(const QColor& color, Object& object);
+
     Camera*             cameraEntity() const {return mCameraEntity;}
     Qt3DCore::QEntity*	rootEntity() const {return mRootEntity;}
     Qt3DCore::QEntity*	elementsEntity() const {return mElementsEntity;}
@@ -50,7 +52,7 @@ protected:
 private:
     void    generateAxis();
     void    updateQmlProperties();
-    void    instantiate(const Point& point);
+    void    instantiate(Point& point);
     void    releaseModel(Qt3DCore::QNode& model);
 
     static Scene*                       mInstance;

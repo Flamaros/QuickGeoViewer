@@ -39,6 +39,7 @@
 using namespace Qt3DCore;
 using namespace Qt3DRender;
 using namespace Qt3DInput;
+using namespace Qt3DExtras;
 
 Scene*          Scene::mInstance = nullptr;
 QQmlContext*	Scene::qmlContext = nullptr;
@@ -107,7 +108,7 @@ void    Scene::initialize()
     mCameraEntity->setUpVector(QVector3D(0.0f, 1.0f, 0.0f));
     mCameraEntity->setPosition(QVector3D(0.0f, 0.0f, 20.f));
 
-    mCameraControler = new Qt3DExtras::QOrbitCameraController(mRootEntity);
+    mCameraControler = new QOrbitCameraController(mRootEntity);
     mCameraControler->setZoomInLimit(10.0f);
     mCameraControler->setLinearSpeed(50.0f);
     mCameraControler->setLookSpeed(180.0f);
@@ -147,6 +148,22 @@ void    Scene::clear()
     }
 
     Q_ASSERT(mElementsEntity->childNodes().size() == 0);
+}
+
+void    Scene::setObjectColor(const QColor& color, Object& object)
+{
+    QEntity*    entity = static_cast<QEntity*>(object.mSceneData);
+
+    foreach (QComponent* component, entity->components())
+    {
+        QPhongMaterial* material = dynamic_cast<QPhongMaterial*>(component);
+
+        if (material != nullptr)
+        {
+            material->setDiffuse(color);
+            material->setAmbient(color);
+        }
+    }
 }
 
 //==============================================================================
@@ -189,10 +206,10 @@ void    Scene::generateAxis()
 
     for (int i = 0; i < 3; i++)
     {
-        Qt3DExtras::QCylinderMesh*  mesh = new Qt3DExtras::QCylinderMesh();
-        Qt3DCore::QTransform*       transform = new Qt3DCore::QTransform();
-        Qt3DExtras::QPhongMaterial* material = new Qt3DExtras::QPhongMaterial();
-        Qt3DCore::QEntity*          entity = new Qt3DCore::QEntity(mAxesEntity);
+        QCylinderMesh*          mesh = new QCylinderMesh();
+        Qt3DCore::QTransform*   transform = new Qt3DCore::QTransform();
+        QPhongMaterial*         material = new QPhongMaterial();
+        QEntity*                entity = new QEntity(mAxesEntity);
 
         mesh->setRadius(0.05f);
         mesh->setLength(100.0f);
@@ -215,12 +232,14 @@ void    Scene::updateQmlProperties()
     qmlContext->setContextProperty(elementsProperty, mElementsEntity);
 }
 
-void    Scene::instantiate(const Point& point)
+void    Scene::instantiate(Point& point)
 {
-    Qt3DExtras::QCuboidMesh*    mesh = new Qt3DExtras::QCuboidMesh();
-    Qt3DCore::QTransform*       transform = new Qt3DCore::QTransform();
-    Qt3DExtras::QPhongMaterial* material = new Qt3DExtras::QPhongMaterial();
-    Qt3DCore::QEntity*          entity = new Qt3DCore::QEntity(mElementsEntity);
+    QCuboidMesh*            mesh = new QCuboidMesh();
+    Qt3DCore::QTransform*   transform = new Qt3DCore::QTransform();
+    QPhongMaterial*         material = new QPhongMaterial();
+    QEntity*                entity = new QEntity(mElementsEntity);
+
+    Q_ASSERT(point.mSceneData == nullptr);
 
     mesh->setXExtent(0.1f);
     mesh->setYExtent(0.1f);
@@ -228,15 +247,17 @@ void    Scene::instantiate(const Point& point)
 
     transform->setTranslation(point.position());
 
-    material->setDiffuse(QColor(QRgb(0xbeb32b)));
-    material->setAmbient(QColor(QRgb(0xbeb32b)));
+    material->setDiffuse(point.color());
+    material->setAmbient(point.color());
 
     entity->addComponent(mesh);
     entity->addComponent(material);
     entity->addComponent(transform);
+
+    point.mSceneData = entity;
 }
 
-void    Scene::releaseModel(Qt3DCore::QNode& model)
+void    Scene::releaseModel(QNode& model)
 {
     QEntity*    entity = dynamic_cast<QEntity*>(&model);
 

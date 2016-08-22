@@ -15,38 +15,80 @@ Item {
     height: 400
 
     property alias  userInputTextField: userInput
+    property alias  objectsListView: objectsListView
 
     GridLayout {
-        id: gridLayout1
+        id: mainGridLayout
         flow: GridLayout.LeftToRight
         rows: 2
         columns: 2
         anchors.fill: parent
 
-        ListView {
-            id: listView1
-            width: 110
-            height: 160
+        Item {
+            width: objectsListView.width + 5 * 2
             Layout.fillHeight: true
-            model: application.objects
-            delegate: Item {
-                x: 5
-                width: 80
-                height: 40
-                Row {
-                    id: row2
-                    Rectangle {
-                        width: 40
-                        height: 40
-//                        color: colorCode
+
+            ListView {
+                id: objectsListView
+                width: minimumWidth
+                anchors.top: parent.top
+                anchors.topMargin: verticalMargin
+                x: horizontalMargin
+                height: parent.height - verticalMargin * 2
+                clip: true
+                focus: true
+                property real horizontalMargin: 5
+                property real verticalMargin: 5
+                property real minimumWidth: 200
+
+                Keys.onUpPressed: {
+                    currentIndex = Math.min(0, currentIndex - 1)
+                }
+
+                Keys.onDownPressed: {
+                    currentIndex = Math.max(count, currentIndex - 1)
+                }
+
+                delegate: Item {
+                    id: rootObjectItemDelegate
+                    width: objectsListView.width
+                    height: label.implicitHeight + 5
+                    property variant    objectData: modelData
+                    property real       contentWidth: content.width
+
+//                    border.width: 1
+//                    border.color: "black"
+//                    color: "Red"
+                    MouseArea {
+                        width: objectsListView.width - objectsListView.horizontalMargin * 2
+                        anchors.verticalCenter: parent.verticalCenter
+                        height: parent.height
+                        onClicked: {
+                            objectsListView.currentIndex = index
+                        }
                     }
 
-                    Text {
-                        text: modelData.name
-                        font.bold: true
-                        anchors.verticalCenter: parent.verticalCenter
+                    Item {
+                        id: content
+
+                        width: label.implicitWidth + 5
+                        height: parent.height
+                        Text {
+                            id: label
+                            x: 5 / 2
+                            text: modelData.label
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
                     }
-                    spacing: 10
+                }
+                highlight: Rectangle {
+                    width: objectsListView.width - objectsListView.horizontalMargin * 2
+                    height: objectsListView.currentItem.height + objectsListView.spacing
+                    color: "lightsteelblue"
+                }
+                ScrollBar.vertical: ScrollBar {
+                    id: scrollBar
+                    active: true
                 }
             }
         }

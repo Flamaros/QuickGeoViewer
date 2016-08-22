@@ -119,6 +119,7 @@ bool    Application::parseCommands(const QStringList& commands)
                                    coordinates[0].toFloat()
                                , coordinates[1].toFloat()
                     , coordinates.size() > 2 ? coordinates[2].toFloat() : 0.0f));
+            point->setLabel(QString("%1 (%2, %3, %4)").arg(point->name()).arg(point->position().x(), 0, 'f', 2).arg(point->position().y(), 0, 'f', 2).arg(point->position().z(), 0, 'f', 2));
 
             objects.append(point);
         }
