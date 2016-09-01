@@ -81,6 +81,7 @@ void    Application::clear()
 bool    Application::parseCommands(const QStringList& commands)
 {
     static QString  pointObject = "Point";
+    static QString  parenthesisObject = "(";
 
     QList<QObject*> objects;
 
@@ -90,20 +91,27 @@ bool    Application::parseCommands(const QStringList& commands)
 
         nameAndObject = commands[i].split('=');
 
+        if (nameAndObject.size() == 1) // Objects are not named we generate a name
+        {
+            nameAndObject.push_front(QString::asprintf("point%d", int(objects.size())));
+        }
+
         if (nameAndObject.size() != 2)
         {
             clearObjects(objects);
             return false;
         }
 
-        if (nameAndObject[1].startsWith(pointObject))
+        if (nameAndObject[1].startsWith(pointObject) || nameAndObject[1].startsWith(parenthesisObject))
         {
             QString     position = nameAndObject[1];
             QStringList coordinates;
 
-            position.remove(0, pointObject.size());
+            position.remove(pointObject);
             position.remove("[{");
             position.remove("}]");
+            position.remove("(");
+            position.remove(")");
             coordinates = position.split(',');
 
             if (coordinates.size() < 2)
