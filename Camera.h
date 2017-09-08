@@ -4,8 +4,11 @@
 
 #include <Qt3DRender/QCamera>
 
-class Camera : public Qt3DRender::QCamera
+namespace geo
 {
-public:
-    Camera(QNode* parent = nullptr);
-};
+    class Camera : public Qt3DRender::QCamera
+    {
+    public:
+        Camera(QNode* parent = nullptr);
+    };
+}

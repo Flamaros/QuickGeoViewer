@@ -35,6 +35,6 @@ private:
     void    clearObjects(QList<QObject*>& objects);
 
     QQmlApplicationEngine*  mEngine;
-    Scene*                  mScene;
+    geo::Scene*             mScene;
     QList<QObject*>         mObjects;
 };

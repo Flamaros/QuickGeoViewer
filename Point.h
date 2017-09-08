@@ -4,19 +4,22 @@
 
 #include <QtGui/QVector3D>
 
-class Point : public Object
+namespace geo
 {
-    Q_OBJECT
+    class Point : public Object
+    {
+        Q_OBJECT
 
-public:
-    Q_PROPERTY(QVector3D position READ position WRITE setPosition NOTIFY positionChanged)
+    public:
+        Q_PROPERTY(QVector3D position READ position WRITE setPosition NOTIFY positionChanged)
 
-    void        setPosition(const QVector3D& position) {mPosition = position;}
-    QVector3D   position() const {return mPosition;}
+        void        setPosition(const QVector3D& position) {mPosition = position;}
+        QVector3D   position() const {return mPosition;}
 
-signals:
-    void    positionChanged();
+    signals:
+        void    positionChanged();
 
-private:
-    QVector3D   mPosition;
-};
+    private:
+        QVector3D   mPosition;
+    };
+}

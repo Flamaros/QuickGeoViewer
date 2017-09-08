@@ -2,7 +2,10 @@
 
 using namespace Qt3DCore;
 
-Camera::Camera(QNode* parent)
-    : QCamera(parent)
+namespace geo
 {
+    Camera::Camera(QNode* parent)
+        : QCamera(parent)
+    {
+    }
 }

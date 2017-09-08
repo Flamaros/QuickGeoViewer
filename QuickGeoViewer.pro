@@ -14,7 +14,8 @@ SOURCES += main.cpp \
     Camera.cpp \
     Application.cpp \
     Object.cpp \
-    Point.cpp
+    Point.cpp \
+    Polygon.cpp
 
 RESOURCES += qml.qrc
 
@@ -29,4 +30,5 @@ HEADERS += \
     Camera.h \
     Application.h \
     Object.h \
-    Point.h
+    Point.h \
+    Polygon.h
