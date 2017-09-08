@@ -1,6 +1,6 @@
-import QtQuick 2.5
-import QtQuick.Controls 2.0
-import QtQuick.Layouts 1.1
+import QtQuick 2.9
+import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 
 import Qt3D.Core 2.0
 import QtQuick.Scene3D 2.0
@@ -11,14 +11,19 @@ import Geo.Point 1.0
 
 Item {
     id: item1
-    width: 400
-    height: 400
+    width: 800
+    height: 800
 
     property alias  userInputTextField: userInput
     property alias  objectsListView: objectsListView
+    property alias  animationSlider: animationSlider
 
     GridLayout {
         id: mainGridLayout
+        anchors.rightMargin: 5
+        anchors.leftMargin: 5
+        anchors.bottomMargin: 5
+        anchors.topMargin: 5
         flow: GridLayout.LeftToRight
         rows: 2
         columns: 2
@@ -37,7 +42,7 @@ Item {
                 height: parent.height - verticalMargin * 2
             }
         }
-        Item {
+        ColumnLayout {
             id: column1
             width: 200
             height: 400
@@ -45,14 +50,6 @@ Item {
             Layout.fillWidth: true
 
             GeoScene {
-                anchors.top: parent.top
-                anchors.topMargin: 0
-                anchors.bottom: row1.top
-                anchors.bottomMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
@@ -68,15 +65,17 @@ Item {
                 }
             }
 
-            Item {
+            Slider {
+                id: animationSlider
+                value: 0
+                stepSize: 1
+                live: true
+                Layout.fillWidth: true
+            }
+
+            RowLayout {
                 id: row1
                 height: userInput.height
-                anchors.bottom: parent.bottom
-                anchors.bottomMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
                 Layout.fillWidth: true
                 Layout.alignment: Qt.AlignRight | Qt.AlignBottom
 
@@ -90,15 +89,16 @@ Item {
                 TextField {
                     id: userInput
                     text: qsTr("")
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.left: label1.right
-                    anchors.leftMargin: 5
+//                    anchors.right: parent.right
+//                    anchors.rightMargin: 0
+//                    anchors.left: label1.right
+//                    anchors.leftMargin: 5
                     anchors.verticalCenter: parent.verticalCenter
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignRight | Qt.AlignBottom
                 }
             }
+
         }
     }
 }

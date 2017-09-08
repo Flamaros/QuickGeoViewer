@@ -77,6 +77,8 @@ namespace geo
         QCullFace*			    cullFace = new QCullFace(cameraSelector);
         QRenderPassFilter*	    renderPassFilter = new QRenderPassFilter(cullFace);
 
+        Q_UNUSED(renderPassFilter);
+
         // TechiqueFilter and renderPassFilter are not implement yet
 
         surfaceSelector->setSurface(nullptr);
@@ -153,7 +155,7 @@ namespace geo
         Q_ASSERT(mElementsEntity->childNodes().size() == 0);
     }
 
-    void    Scene::setObjectColor(const QColor& color, Object& object)
+    void    Scene::setObjectColor(const QColor& color, const Object& object)
     {
         QEntity*    entity = static_cast<QEntity*>(object.mSceneData);
 
@@ -167,6 +169,23 @@ namespace geo
                 material->setAmbient(color);
             }
         }
+    }
+
+    void Scene::setObjectVisibility(bool visible, const Object& object)
+    {
+        QEntity*    entity = static_cast<QEntity*>(object.mSceneData);
+
+        if (visible)
+            entity->setParent(mElementsEntity);
+        else
+            entity->setParent(static_cast<QNode*>(nullptr));
+    }
+
+    bool Scene::isObjectVisible(const Object& object) const
+    {
+        QEntity*    entity = static_cast<QEntity*>(object.mSceneData);
+
+        return entity->parent() == mElementsEntity;
     }
 
     //==============================================================================

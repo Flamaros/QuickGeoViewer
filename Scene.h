@@ -38,7 +38,9 @@ namespace geo
         void    instantiate(const QList<QObject*>& objects);
         void    clear();
 
-        void    setObjectColor(const QColor& color, Object& object);
+        void    setObjectColor(const QColor& color, const Object& object);
+        void    setObjectVisibility(bool visible, const Object& object);
+        bool    isObjectVisible(const Object& object) const;
 
         Camera*             cameraEntity() const {return mCameraEntity;}
         Qt3DCore::QEntity*	rootEntity() const {return mRootEntity;}
