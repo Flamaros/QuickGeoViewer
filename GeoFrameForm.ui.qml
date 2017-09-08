@@ -9,7 +9,7 @@ import Geo.Scene 1.0
 import Geo.Object 1.0
 import Geo.Point 1.0
 
-Item {
+FocusScope {
     id: item1
     width: 800
     height: 800

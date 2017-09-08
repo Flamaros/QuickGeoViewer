@@ -106,7 +106,7 @@ namespace geo
         mCameraEntity->setAspectRatio(width() / height());
 
         mCameraEntity->setViewCenter(QVector3D(0.0f, 0.0f, 0.f));
-        mCameraEntity->setUpVector(QVector3D(0.0f, 0.0f, 1.0f));
+//        mCameraEntity->setUpVector(QVector3D(0.0f, 0.0f, 1.0f));
         mCameraEntity->setPosition(QVector3D(2.0f, -10.0f, 10.f));
 
         mCameraControler = new QOrbitCameraController(mRootEntity);
