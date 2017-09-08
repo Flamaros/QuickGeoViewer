@@ -17,6 +17,8 @@ FocusScope {
     property alias  userInputTextField: userInput
     property alias  objectsListView: objectsListView
     property alias  animationSlider: animationSlider
+    property alias  playButton: playButton
+    property alias  cumulativeCheckBox: cumulativeCheckBox
 
     GridLayout {
         id: mainGridLayout
@@ -42,10 +44,9 @@ FocusScope {
                 height: parent.height - verticalMargin * 2
             }
         }
+
         ColumnLayout {
             id: column1
-            width: 200
-            height: 400
             Layout.fillHeight: true
             Layout.fillWidth: true
 
@@ -65,12 +66,29 @@ FocusScope {
                 }
             }
 
-            Slider {
-                id: animationSlider
-                value: 0
-                stepSize: 1
-                live: true
+            RowLayout {
                 Layout.fillWidth: true
+
+                Button {
+                    id: playButton
+
+                    property bool isPlaying: false
+                    text: isPlaying == false ? qsTr("play") : qsTr("stop")
+                }
+
+                CheckBox {
+                    id: cumulativeCheckBox
+                    text: qsTr("cumulative")
+                    checked: false
+                }
+
+                Slider {
+                    id: animationSlider
+                    value: 0
+                    stepSize: 1
+                    live: true
+                    Layout.fillWidth: true
+                }
             }
 
             RowLayout {

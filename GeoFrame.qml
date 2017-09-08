@@ -3,6 +3,16 @@ import QtQuick 2.9
 GeoFrameForm {
     anchors.fill: parent
 
+    Timer {
+        id: animationTimer
+        repeat: false
+        onTriggered: {
+            playButton.isPlaying = false
+            for (var i = 0; i < application.objects.length; i++)
+                application.objects[i].visible = true
+        }
+    }
+
     objectsListView.model: application != null ? application.objects : null
     objectsListView.width: {
         var maxWidth = 200.0    // Minimum width
@@ -25,6 +35,36 @@ GeoFrameForm {
             application.objects[i].visible =
                     (i == Math.floor(animationSlider.value))
     }
+    animationSlider.onFocusChanged: {
+        if (animationSlider.focus == false)
+            for (var i = 0; i < application.objects.length; i++)
+                application.objects[i].visible = true
+    }
+
+    animationSlider.transitions: Transition {
+        NumberAnimation {
+            properties: "value"
+            easing.type: Easing.Linear
+            from: 0
+            to: animationSlider.to
+            duration: playButton.isPlaying ? application.objects.length * 200 : 0
+        }
+    }
+
+    playButton.onClicked: {
+        playButton.isPlaying = !playButton.isPlaying
+        animationTimer.interval = application.objects.length * 200 + 5 * 1000
+        if (playButton.isPlaying)
+        {
+            animationTimer.start()
+            animationSlider.value = 0
+            animationSlider.value = animationSlider.to
+        }
+        else
+            animationTimer.stop()
+    }
+
+
 
 //    Connections {
 //       target: objectsListView
