@@ -32,6 +32,7 @@ ApplicationWindow {
                 userInputTextField.clear()
             else
                 userInputTextField.color = "red"
+            userInputTextField.focus = false
         }
 
         userInputTextField.onTextChanged: {

@@ -17,4 +17,17 @@ GeoFrameForm {
                 objectsListView.contentItem.visibleChildren[i].objectData.color = "white"
         objectsListView.currentItem.objectData.color = "red"
     }
+
+//    Connections {
+//       target: objectsListView
+//       Keys.onUpPressed: {
+//               objectsListView.currentIndex = Math.min(0, currentIndex - 1)
+//           }
+//     }
+//    Connections {
+//       target: objectsListView
+//       Keys.onDownPressed: {
+//           objectsListView.currentIndex = Math.max(count, currentIndex - 1)
+//           }
+//     }
 }
