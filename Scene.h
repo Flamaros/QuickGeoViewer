@@ -35,6 +35,7 @@ namespace geo
         static Scene*   singleton();
 
         void	initialize();
+        void    destroy();
         void    instantiate(const QList<QObject*>& objects);
         void    clear();
 

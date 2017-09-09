@@ -4,8 +4,6 @@
 
 #include <QtCore/QVector>
 
-#include "Scene.h"
-
 class Object;
 
 class QQmlApplicationEngine;
@@ -35,6 +33,5 @@ private:
     void    clearObjects(QList<QObject*>& objects);
 
     QQmlApplicationEngine*  mEngine;
-    geo::Scene*             mScene;
     QList<QObject*>         mObjects;
 };

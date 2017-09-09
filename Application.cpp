@@ -5,6 +5,7 @@
 
 #include <QRegularExpression>
 
+#include "Scene.h"
 #include "Object.h"
 #include "Point.h"
 #include "Polygon.h"
@@ -17,9 +18,9 @@ Application::Application(int& argc, char** argv, int flags)
 
 Application::~Application()
 {
+    geo::Scene::singleton()->destroy();
     mEngine->rootContext()->setContextProperty("application", nullptr);
 
-    delete mScene;
     delete mEngine;
 }
 
@@ -28,9 +29,9 @@ void    Application::initialize()
     geo::Scene::qmlContext = mEngine->rootContext();
 
     qmlRegisterType<geo::Scene>("Geo.Scene", 1, 0, "GeoScene");
-    qmlRegisterType<geo::Scene>("Geo.Object", 1, 0, "GeoObject");
-    qmlRegisterType<geo::Scene>("Geo.Point", 1, 0, "GeoPoint");
-    qmlRegisterType<geo::Scene>("Geo.Polygon", 1, 0, "GeoPolygon");
+    qmlRegisterType<geo::Object>("Geo.Object", 1, 0, "GeoObject");
+    qmlRegisterType<geo::Point>("Geo.Point", 1, 0, "GeoPoint");
+    qmlRegisterType<geo::Polygon>("Geo.Polygon", 1, 0, "GeoPolygon");
 
     mEngine->rootContext()->setContextProperty("application", this);
     mEngine->load(QUrl(QLatin1String("qrc:/main.qml")));

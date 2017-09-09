@@ -1,7 +1,7 @@
-#include <QGuiApplication>
-
 #include "Application.h"
 #include "Scene.h"
+
+#include <QGuiApplication>
 
 int main(int argc, char *argv[])
 {

@@ -5,10 +5,6 @@ import QtQuick.Layouts 1.3
 import Qt3D.Core 2.0
 import QtQuick.Scene3D 2.0
 
-import Geo.Scene 1.0
-import Geo.Object 1.0
-import Geo.Point 1.0
-
 FocusScope {
     id: item1
     width: 800
@@ -50,20 +46,16 @@ FocusScope {
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            GeoScene {
+            Scene3D {
+                id: scene3D
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
-                Scene3D {
-                    id: scene3D
-                    anchors.fill: parent
+                focus: true
+                aspects: ["input", "logic"]
+                cameraAspectRatioMode: Scene3D.AutomaticAspectRatio
 
-                    focus: true
-                    aspects: ["input", "logic"]
-                    cameraAspectRatioMode: Scene3D.AutomaticAspectRatio
-
-                    entity: scene3DRootEntity
-                }
+                entity: scene3DRootEntity
             }
 
             RowLayout {

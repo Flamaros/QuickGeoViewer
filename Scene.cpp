@@ -125,6 +125,20 @@ namespace geo
         updateQmlProperties();
     }
 
+    void Scene::destroy()
+    {
+        clear();
+
+        delete mElementsEntity;
+        mElementsEntity = nullptr;
+        delete mAxesEntity;
+        mAxesEntity = nullptr;
+        delete mRootEntity;
+        mRootEntity = nullptr;
+
+        updateQmlProperties();
+    }
+
     void    Scene::instantiate(const QList<QObject*>& objects)
     {
         for (int i = 0; i < objects.size(); i++)
