@@ -45,6 +45,16 @@ using namespace Qt3DExtras;
 
 namespace geo
 {
+    SceneEntity::SceneEntity(QNode* parent)
+        : QEntity(parent)
+    {
+        if (Scene::singleton()->rootEntity() == nullptr)
+            Scene::singleton()->initialize();
+        children().push_back(dynamic_cast<QComponent*>(Scene::singleton()->rootEntity()));
+    }
+
+    //==========================================================================
+
     Scene*          Scene::mInstance = nullptr;
     QQmlContext*	Scene::qmlContext = nullptr;
 
@@ -62,63 +72,6 @@ namespace geo
         mElementsEntity = new QEntity(mRootEntity);
 
         mRootEntity->setObjectName(QStringLiteral("rootEntity"));
-
-        // Camera
-        mCameraEntity = new Camera(mRootEntity);
-        mCameraEntity->setObjectName(QStringLiteral("cameraEntity"));
-
-        QRenderSettings*        renderSettings = new QRenderSettings();
-        QInputSettings*         inputSettings = new QInputSettings();
-        QTechniqueFilter*       forwardRenderer = new QTechniqueFilter();
-        QRenderSurfaceSelector* surfaceSelector = new QRenderSurfaceSelector(forwardRenderer);
-        QViewport*			    viewport = new QViewport(surfaceSelector);
-        QClearBuffers*		    clearBuffers = new QClearBuffers(viewport);
-        QCameraSelector*	    cameraSelector = new QCameraSelector(clearBuffers);
-        QCullFace*			    cullFace = new QCullFace(cameraSelector);
-        QRenderPassFilter*	    renderPassFilter = new QRenderPassFilter(cullFace);
-
-        Q_UNUSED(renderPassFilter);
-
-        // TechiqueFilter and renderPassFilter are not implement yet
-
-        surfaceSelector->setSurface(nullptr);
-        viewport->setNormalizedRect(QRectF(0.0f, 0.0f, 1.0f, 1.0f));
-        clearBuffers->setClearColor(QColor(64, 128, 128));
-        clearBuffers->setBuffers(QClearBuffers::ColorDepthBuffer);
-        cameraSelector->setCamera(mCameraEntity);
-        renderSettings->setActiveFrameGraph(forwardRenderer);
-        cullFace->setEnabled(false);
-
-        // Setting the FrameGraph
-        mRootEntity->addComponent(renderSettings);
-        mRootEntity->addComponent(inputSettings);
-
-        mAspectEngine = new QAspectEngine;
-        mAspectEngine->registerAspect(new QRenderAspect);
-        mAspectEngine->registerAspect(new QInputAspect);
-        mAspectEngine->setRootEntity(QEntityPtr(mRootEntity));
-
-        // Setting the camera
-        mCameraEntity->setProjectionType(QCameraLens::PerspectiveProjection);
-        mCameraEntity->setNearPlane(0.2f);
-        mCameraEntity->setFarPlane(100.0f);
-        mCameraEntity->setFieldOfView(70.0f);
-        mCameraEntity->setAspectRatio(width() / height());
-
-        mCameraEntity->setViewCenter(QVector3D(0.0f, 0.0f, 0.f));
-//        mCameraEntity->setUpVector(QVector3D(0.0f, 0.0f, 1.0f));
-        mCameraEntity->setPosition(QVector3D(2.0f, -10.0f, 10.f));
-
-        mCameraControler = new QOrbitCameraController(mRootEntity);
-        mCameraControler->setZoomInLimit(2.0f);
-        mCameraControler->setLinearSpeed(50.0f);
-        mCameraControler->setLookSpeed(180.0f);
-        mCameraControler->setCamera(mCameraEntity);
-
-    //    mCameraEntity->setLeft(-1.0f);
-    //    mCameraEntity->setRight(1.0f);
-    //    mCameraEntity->setTop(1.0f);
-    //    mCameraEntity->setBottom(-1.0f);
 
         generateAxis();
 
@@ -205,9 +158,7 @@ namespace geo
     //==============================================================================
 
     Scene::Scene()
-        : mCameraEntity(nullptr)
-        , mCameraControler(nullptr)
-        , mRootEntity(nullptr)
+        : mRootEntity(nullptr)
         , mAxesEntity(nullptr)
         , mElementsEntity(nullptr)
         , mAspectEngine(nullptr)
@@ -215,14 +166,6 @@ namespace geo
         if (mInstance == nullptr)
             mInstance = this;
         updateQmlProperties();
-    }
-
-    void    Scene::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
-    {
-        QQuickItem::geometryChanged(newGeometry, oldGeometry);
-
-        if (mCameraEntity)
-            mCameraEntity->setAspectRatio(newGeometry.width() / newGeometry.height());
     }
 
     void    Scene::generateAxis()

@@ -28,7 +28,8 @@ void    Application::initialize()
 {
     geo::Scene::qmlContext = mEngine->rootContext();
 
-    qmlRegisterType<geo::Scene>("Geo.Scene", 1, 0, "GeoScene");
+//    geo::Scene::singleton();
+    qmlRegisterType<geo::SceneEntity>("Geo.Scene", 1, 0, "GeoScene");
     qmlRegisterType<geo::Object>("Geo.Object", 1, 0, "GeoObject");
     qmlRegisterType<geo::Point>("Geo.Point", 1, 0, "GeoPoint");
     qmlRegisterType<geo::Polygon>("Geo.Polygon", 1, 0, "GeoPolygon");
@@ -36,7 +37,7 @@ void    Application::initialize()
     mEngine->rootContext()->setContextProperty("application", this);
     mEngine->load(QUrl(QLatin1String("qrc:/main.qml")));
 
-    geo::Scene::singleton()->initialize();
+//    geo::Scene::singleton()->initialize();
 }
 
 bool    Application::parseUserInput(const QString& text)

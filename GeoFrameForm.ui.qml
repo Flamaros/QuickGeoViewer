@@ -2,9 +2,6 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
-import Qt3D.Core 2.0
-import QtQuick.Scene3D 2.0
-
 FocusScope {
     id: item1
     width: 800
@@ -46,16 +43,10 @@ FocusScope {
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            Scene3D {
-                id: scene3D
+            View3D {
+                id: view3D
                 Layout.fillHeight: true
                 Layout.fillWidth: true
-
-                focus: true
-                aspects: ["input", "logic"]
-                cameraAspectRatioMode: Scene3D.AutomaticAspectRatio
-
-                entity: scene3DRootEntity
             }
 
             RowLayout {
