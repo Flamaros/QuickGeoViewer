@@ -1,4 +1,4 @@
-import QtQuick 2.9 as QQ2
+//import QtQuick 2.9 as QQ2
 import QtQuick.Scene3D 2.0
 
 import Qt3D.Core 2.0
@@ -14,17 +14,6 @@ Scene3D {
     focus: true
     aspects: ["input", "logic"]
     cameraAspectRatioMode: Scene3D.AutomaticAspectRatio
-
-    property bool sceneRootAdded: false
-
-    onChildrenChanged: {
-        if (sceneRootAdded === false)
-            children.push(scene3DRootEntity)
-        console.log("onChildrenChanged")
-        sceneRootAdded = true
-    }
-
-//    entity: scene3DRootEntity
 
     Entity {
         Camera {
@@ -57,29 +46,6 @@ Scene3D {
 
         GeoScene {
 
-        }
-
-        PhongMaterial {
-            id: material
-        }
-
-        TorusMesh {
-            id: torusMesh
-            radius: 5
-            minorRadius: 1
-            rings: 100
-            slices: 20
-        }
-
-        Transform {
-            id: torusTransform
-            scale3D: Qt.vector3d(1.5, 1, 0.5)
-            rotation: fromAxisAndAngle(Qt.vector3d(1, 0, 0), 45)
-        }
-
-        Entity {
-            id: torusEntity
-            components: [ torusMesh, material, torusTransform ]
         }
     }
 }

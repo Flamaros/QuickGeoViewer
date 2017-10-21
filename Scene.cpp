@@ -50,7 +50,8 @@ namespace geo
     {
         if (Scene::singleton()->rootEntity() == nullptr)
             Scene::singleton()->initialize();
-        children().push_back(dynamic_cast<QComponent*>(Scene::singleton()->rootEntity()));
+
+        Scene::singleton()->rootEntity()->setParent(this);
     }
 
     //==========================================================================
