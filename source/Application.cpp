@@ -35,7 +35,7 @@ void    Application::initialize()
     qmlRegisterType<geo::Polygon>("Geo.Polygon", 1, 0, "GeoPolygon");
 
     mEngine->rootContext()->setContextProperty("application", this);
-    mEngine->load(QUrl(QLatin1String("qrc:/main.qml")));
+    mEngine->load(QUrl(QLatin1String("qrc:/qml/main.qml")));
 
 //    geo::Scene::singleton()->initialize();
 }

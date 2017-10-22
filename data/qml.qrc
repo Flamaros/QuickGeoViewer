@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qtquickcontrols2.conf</file>
+        <file>qml/main.qml</file>
+        <file>qml/GeoFrame.qml</file>
+        <file>qml/GeoFrameForm.ui.qml</file>
+        <file>qml/ObjectList.qml</file>
+        <file>qml/View3D.qml</file>
+        <file>qml/MainView3D.qml</file>
+    </qresource>
+</RCC>
