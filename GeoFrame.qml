@@ -1,6 +1,10 @@
 import QtQuick 2.9
 
 GeoFrameForm {
+    id: geoFrameForm
+
+    property alias geoFrameForm: geoFrameForm
+
     anchors.fill: parent
 
     Timer {

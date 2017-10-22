@@ -3,10 +3,11 @@ import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 FocusScope {
-    id: item1
+    id: focusScope
     width: 800
     height: 800
 
+    property alias  mainView3D: mainView3D
     property alias  userInputTextField: userInput
     property alias  objectsListView: objectsListView
     property alias  animationSlider: animationSlider
@@ -43,10 +44,29 @@ FocusScope {
             Layout.fillHeight: true
             Layout.fillWidth: true
 
-            View3D {
-                id: view3D
+            MainView3D {
+                id: mainView3D
                 Layout.fillHeight: true
                 Layout.fillWidth: true
+            }
+
+            RowLayout {
+                id: rowLayout
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+
+                View3D {
+                    id: frame
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                }
+
+                View3D {
+                    id: frame1
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                }
+
             }
 
             RowLayout {
@@ -67,6 +87,7 @@ FocusScope {
 
                 Slider {
                     id: animationSlider
+                    font.family: "Times New Roman"
                     value: 0
                     stepSize: 1
                     live: true
@@ -90,15 +111,18 @@ FocusScope {
                 TextField {
                     id: userInput
                     text: qsTr("")
-//                    anchors.right: parent.right
-//                    anchors.rightMargin: 0
-//                    anchors.left: label1.right
-//                    anchors.leftMargin: 5
+                    //                    anchors.right: parent.right
+                    //                    anchors.rightMargin: 0
+                    //                    anchors.left: label1.right
+                    //                    anchors.leftMargin: 5
                     anchors.verticalCenter: parent.verticalCenter
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignRight | Qt.AlignBottom
                 }
             }
+
+
+
 
         }
     }

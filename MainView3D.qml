@@ -9,12 +9,19 @@ import Qt3D.Extras 2.0
 import Geo.Scene 1.0
 
 Scene3D {
+    id: scene3D
+
+    property alias scene3D: scene3D
+    property alias rootEntity: rootEntity
+    property alias camera: camera
+    property alias geoScene: geoScene
+
     focus: true
     aspects: ["input", "logic"]
     cameraAspectRatioMode: Scene3D.AutomaticAspectRatio
 
     Entity {
-        parent: mainWindow.geoFrame.geoFrameForm.mainView3D.geoScene
+        id: rootEntity
 
         Camera {
             id: camera
@@ -43,5 +50,9 @@ Scene3D {
             },
             InputSettings { }
         ]
+
+        GeoScene {
+            id: geoScene
+        }
     }
 }

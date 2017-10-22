@@ -5,6 +5,9 @@ import QtQuick.Window 2.3
 
 ApplicationWindow {
     id: mainWindow
+
+    property alias geoFrame: geoFrame
+
     visible: true
     width: 1024
     height: 768
@@ -25,6 +28,7 @@ ApplicationWindow {
     }
 
     GeoFrame {
+        id: geoFrame
         anchors.fill: parent
 
         userInputTextField.onAccepted: {
